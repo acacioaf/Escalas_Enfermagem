@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escalas de Enfermagem</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0ea5a4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon-512.png">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="header-section">
+            <img src="logo_topo.png.png" class="logo-image" alt="Logo da Empresa">
+            <div class="header-text-block">
+                <h1>Escala de Avaliação dos Pacientes</h1>
+            </div>
+            <div style="width: 180px;"></div> 
+        </div>
+
+        <div class="patient-info">
+            <h3>Dados do Paciente</h3>
+            <div class="patient-grid">
+                <div>
+                    <label>Nome</label>
+                    <input type="text" id="patientName" placeholder="Nome completo">
+                </div>
+                <div>
+                    <label>Data de Nascimento</label>
+                    <input type="date" id="patientBirth">
+                </div>
+
+                <div>
+                    <label>Prontuário</label>
+                    <input type="text" id="patientRecord" placeholder="Nº prontuário">
+                </div>
+            </div>
+        </div>
+
+        <div class="scale-menu">
+    <button id="btn-fugulin" class="scale-btn active" onclick="showScale('fugulin')">Fugulin</button>
+    <button id="id-braden" class="scale-btn" onclick="showScale('braden')">Braden</button>
+    <button id="id-morse" class="scale-btn" onclick="showScale('morse')">Morse</button>
+    <button id="id-broncoaspiracao" class="scale-btn" onclick="showScale('broncoaspiracao')">Broncoaspiração</button>
+    <button id="id-trombose" class="scale-btn" onclick="showScale('trombose')">Trombose</button>
+    <button id="id-maddox" class="scale-btn" onclick="showScale('maddox')">Maddox</button>
+</div>
+
+        <form id="assessmentForm">
+
+            <div class="scale-section" id="scale-fugulin">
+                <h2>Escala de Fugulin</h2>
+                <p>Clique no critério para expandir e selecionar a opção.</p>
+
+                <div class="assessment-group" data-criterion="mentalState">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Estado Mental</label>
+                        <span class="chevron">▶</span> </div>
+                    
+                    <select id="mentalStateSelect" name="mentalState" style="display: none;">
+                        <option value="0" selected>Orientado no tempo e espaço</option>
+                        <option value="1">Períodos de desorientação</option>
+                        <option value="2">Períodos de inconsciência</option>
+                        <option value="3">Inconsciente</option>
+                    </select>
+
+                    <div class="option-container hidden-by-default" data-select-id="mentalStateSelect">
+                        <div class="option-balloon" data-value="0">Orientado no tempo e espaço (0)</div>
+                        <div class="option-balloon" data-value="1">Períodos de desorientação (1)</div>
+                        <div class="option-balloon" data-value="2">Períodos de inconsciência (2)</div>
+                        <div class="option-balloon" data-value="3">Inconsciente (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="oxygenation">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Oxigenação</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                     <select id="oxygenationSelect" name="oxygenation" style="display: none;">
+                        <option value="0" selected>Não depende de oxigênio</option>
+                        <option value="1">Uso contínuo de máscara ou cateter de oxigênio</option>
+                        <option value="2">Uso intermitente de cateter ou máscara de oxigenoterapia</option>
+                        <option value="3">Ventilação mecânica</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="oxygenationSelect">
+                        <div class="option-balloon" data-value="0">Não depende de oxigênio (0)</div>
+                        <div class="option-balloon" data-value="1">Uso contínuo de máscara ou cateter de oxigênio (1)</div>
+                        <div class="option-balloon" data-value="2">Uso intermitente de cateter ou máscara de oxigenoterapia (2)</div>
+                        <div class="option-balloon" data-value="3">Ventilação mecânica (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="vitalSigns">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Sinais Vitais</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="vitalSignsSelect" name="vitalSigns" style="display: none;">
+                        <option value="0" selected>Controle a cada 8h</option>
+                        <option value="1">Controle a cada 6h</option>
+                        <option value="2">Controle a cada 4h</option>
+                        <option value="3">Controle a cada 2h ou menos</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="vitalSignsSelect">
+                        <div class="option-balloon" data-value="0">Controle a cada 8h (0)</div>
+                        <div class="option-balloon" data-value="1">Controle a cada 6h (1)</div>
+                        <div class="option-balloon" data-value="2">Controle a cada 4h (2)</div>
+                        <div class="option-balloon" data-value="3">Controle a cada 2h ou menos (3)</div>
+                    </div>
+                </div>
+                
+                <div class="assessment-group" data-criterion="mobility">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Motilidade</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="mobilitySelect" name="mobility" style="display: none;">
+                        <option value="0" selected>Movimenta normalmente</option>
+                        <option value="1">Limitação de movimentos</option>
+                        <option value="2">Dificuldade em movimentar segmentos</option>
+                        <option value="3">Incapaz de movimentar o corpo inteiro</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="mobilitySelect">
+                        <div class="option-balloon" data-value="0">Movimenta normalmente (0)</div>
+                        <div class="option-balloon" data-value="1">Limitação de movimentos (1)</div>
+                        <div class="option-balloon" data-value="2">Dificuldade em movimentar segmentos (2)</div>
+                        <div class="option-balloon" data-value="3">Incapaz de movimentar o corpo inteiro (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="ambulation">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Deambulação</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="ambulationSelect" name="ambulation" style="display: none;">
+                        <option value="0" selected>Ambulante sem auxílio</option>
+                        <option value="1">Necessita de auxílio para deambular</option>
+                        <option value="2">Locomove-se com cadeira de rodas</option>
+                        <option value="3">Restrito ao leito</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="ambulationSelect">
+                        <div class="option-balloon" data-value="0">Ambulante sem auxílio (0)</div>
+                        <div class="option-balloon" data-value="1">Necessita de auxílio para deambular (1)</div>
+                        <div class="option-balloon" data-value="2">Locomove-se com cadeira de rodas (2)</div>
+                        <div class="option-balloon" data-value="3">Restrito ao leito (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="feeding">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Alimentação</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="feedingSelect" name="feeding" style="display: none;">
+                        <option value="0" selected>Auto suficiente</option>
+                        <option value="1">Alimentação oral com auxílio</option>
+                        <option value="2">Alimentação via sondas</option>
+                        <option value="3">Exclusivamente via cateter central</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="feedingSelect">
+                        <div class="option-balloon" data-value="0">Auto suficiente (0)</div>
+                        <div class="option-balloon" data-value="1">Alimentação oral com auxílio (1)</div>
+                        <div class="option-balloon" data-value="2">Alimentação via sondas (2)</div>
+                        <div class="option-balloon" data-value="3">Exclusivamente via cateter central (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="personalCare">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Cuidado Corporal</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="personalCareSelect" name="personalCare" style="display: none;">
+                        <option value="0" selected>Auto suficiente</option>
+                        <option value="1">Auxílio parcial no banho/higiene</option>
+                        <option value="2">Banho/Higiene pela equipe (chuveiro)</option>
+                        <option value="3">Banho/Higiene pela equipe (leito)</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="personalCareSelect">
+                        <div class="option-balloon" data-value="0">Auto suficiente (0)</div>
+                        <div class="option-balloon" data-value="1">Auxílio parcial no banho/higiene (1)</div>
+                        <div class="option-balloon" data-value="2">Banho/Higiene pela equipe (chuveiro) (2)</div>
+                        <div class="option-balloon" data-value="3">Banho/Higiene pela equipe (leito) (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="elimination">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Eliminações</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="eliminationSelect" name="elimination" style="display: none;">
+                        <option value="0" selected>Auto suficiente</option>
+                        <option value="1">Uso de vaso sanitário com auxílio</option>
+                        <option value="2">Uso de comadre</option>
+                        <option value="3">Evacuações no leito ou uso de SVD</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="eliminationSelect">
+                        <div class="option-balloon" data-value="0">Auto suficiente (0)</div>
+                        <div class="option-balloon" data-value="1">Uso de vaso sanitário com auxílio (1)</div>
+                        <div class="option-balloon" data-value="2">Uso de comadre (2)</div>
+                        <div class="option-balloon" data-value="3">Evacuações no leito ou uso de SVD (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="therapy">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Terapêutica</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="therapySelect" name="therapy" style="display: none;">
+                        <option value="0" selected>IM ou VO</option>
+                        <option value="1">EV intermitente</option>
+                        <option value="2">EV contínuo ou via sonda</option>
+                        <option value="3">Uso de drogas vasoativas</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="therapySelect">
+                        <div class="option-balloon" data-value="0">IM ou VO (0)</div>
+                        <div class="option-balloon" data-value="1">EV intermitente (1)</div>
+                        <div class="option-balloon" data-value="2">EV contínuo ou via sonda (2)</div>
+                        <div class="option-balloon" data-value="3">Uso de drogas vasoativas (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="woundIntegrity">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Integridade da pele</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="woundIntegritySelect" name="woundIntegrity" style="display: none;">
+                        <option value="0" selected>Pele íntegra</option>
+                        <option value="1">Presença de equimoses/hiperemia/pequenas lesões</option>
+                        <option value="2">Solução de continuidade (subcutâneo/muscular/incisão/ostomia)</option>
+                        <option value="3">Solução de continuidade extensa</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="woundIntegritySelect">
+                        <div class="option-balloon" data-value="0">Pele íntegra (0)</div>
+                        <div class="option-balloon" data-value="1">Presença de equimoses/hiperemia/pequenas lesões (1)</div>
+                        <div class="option-balloon" data-value="2">Solução de continuidade (subcutâneo/muscular/incisão/ostomia) (2)</div>
+                        <div class="option-balloon" data-value="3">Solução de continuidade extensa (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="dressing">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Curativo</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="dressingSelect" name="dressing" style="display: none;">
+                        <option value="0" selected>Sem curativo / limpeza pelo paciente</option>
+                        <option value="1">1 vez ao dia</option>
+                        <option value="2">2 vezes ao dia</option>
+                        <option value="3">3 vezes ao dia ou mais</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="dressingSelect">
+                        <div class="option-balloon" data-value="0">Sem curativo / limpeza pelo paciente (0)</div>
+                        <div class="option-balloon" data-value="1">1 vez ao dia (1)</div>
+                        <div class="option-balloon" data-value="2">2 vezes ao dia (2)</div>
+                        <div class="option-balloon" data-value="3">3 vezes ao dia ou mais (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="dressingTime">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Tempo utilizado na realização de curativos</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="dressingTimeSelect" name="dressingTime" style="display: none;">
+                        <option value="0" selected>Sem curativo / limpeza durante o banho</option>
+                        <option value="1">Entre 5 e 15 minutos</option>
+                        <option value="2">Entre 15 e 30 minutos</option>
+                        <option value="3">Superior a 30 minutos</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="dressingTimeSelect">
+                        <div class="option-balloon" data-value="0">Sem curativo / limpeza durante o banho (0)</div>
+                        <div class="option-balloon" data-value="1">Entre 5 e 15 minutos (1)</div>
+                        <div class="option-balloon" data-value="2">Entre 15 e 30 minutos (2)</div>
+                        <div class="option-balloon" data-value="3">Superior a 30 minutos (3)</div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="scale-section hidden" id="scale-braden">
+                <h2>Escala de Braden</h2>
+                <p>Pontuação total (6 a 23). **Quanto menor a pontuação, maior o risco** de Lesão por Pressão.</p>
+                <hr>
+
+                <div class="assessment-group" data-criterion="bradenSensory">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>1. Percepção Sensorial</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="bradenSensorySelect" name="bradenSensory" style="display: none;">
+                        <option value="1" selected>Totalmente Limitada</option>
+                        <option value="2">Muito Limitada</option>
+                        <option value="3">Levemente Limitada</option>
+                        <option value="4">Nenhuma Limitação</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="bradenSensorySelect">
+                        <div class="option-balloon" data-value="1">Totalmente Limitada (1)</div>
+                        <div class="option-balloon" data-value="2">Muito Limitada (2)</div>
+                        <div class="option-balloon" data-value="3">Levemente Limitada (3)</div>
+                        <div class="option-balloon" data-value="4">Nenhuma Limitação (4)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="bradenMoisture">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>2. Umidade</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="bradenMoistureSelect" name="bradenMoisture" style="display: none;">
+                        <option value="1" selected>Constantemente Molhada</option>
+                        <option value="2">Muito Úmida</option>
+                        <option value="3">Ocasionalmente Úmida</option>
+                        <option value="4">Raramente Úmida</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="bradenMoistureSelect">
+                        <div class="option-balloon" data-value="1">Constantemente Molhada (1)</div>
+                        <div class="option-balloon" data-value="2">Muito Úmida (2)</div>
+                        <div class="option-balloon" data-value="3">Ocasionalmente Úmida (3)</div>
+                        <div class="option-balloon" data-value="4">Raramente Úmida (4)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="bradenActivity">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>3. Atividade</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="bradenActivitySelect" name="bradenActivity" style="display: none;">
+                        <option value="1" selected>Acamado</option>
+                        <option value="2">Confinado à Cadeira</option>
+                        <option value="3">Anda Ocasionalmente</option>
+                        <option value="4">Anda Frequentemente</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="bradenActivitySelect">
+                        <div class="option-balloon" data-value="1">Acamado (1)</div>
+                        <div class="option-balloon" data-value="2">Confinado à Cadeira (2)</div>
+                        <div class="option-balloon" data-value="3">Anda Ocasionalmente (3)</div>
+                        <div class="option-balloon" data-value="4">Anda Frequentemente (4)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="bradenMobility">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>4. Mobilidade</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="bradenMobilitySelect" name="bradenMobility" style="display: none;">
+                        <option value="1" selected>Completamente Ilimitada</option>
+                        <option value="2">Muito Limitada</option>
+                        <option value="3">Levemente Limitada</option>
+                        <option value="4">Nenhuma Limitação</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="bradenMobilitySelect">
+                        <div class="option-balloon" data-value="1">Completamente Ilimitada (1)</div>
+                        <div class="option-balloon" data-value="2">Muito Limitada (2)</div>
+                        <div class="option-balloon" data-value="3">Levemente Limitada (3)</div>
+                        <div class="option-balloon" data-value="4">Nenhuma Limitação (4)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="bradenNutrition">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>5. Nutrição</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="bradenNutritionSelect" name="bradenNutrition" style="display: none;">
+                        <option value="1" selected>Muito Pobre</option>
+                        <option value="2">Provavelmente Inadequada</option>
+                        <option value="3">Adequada</option>
+                        <option value="4">Excelente</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="bradenNutritionSelect">
+                        <div class="option-balloon" data-value="1">Muito Pobre (1)</div>
+                        <div class="option-balloon" data-value="2">Provavelmente Inadequada (2)</div>
+                        <div class="option-balloon" data-value="3">Adequada (3)</div>
+                        <div class="option-balloon" data-value="4">Excelente (4)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="bradenFriction">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>6. Fricção e Cisalhamento</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="bradenFrictionSelect" name="bradenFriction" style="display: none;">
+                        <option value="1" selected>Problema</option>
+                        <option value="2">Problema em Potencial</option>
+                        <option value="3">Sem Problema Aparente</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="bradenFrictionSelect">
+                        <div class="option-balloon" data-value="1">Problema (1)</div>
+                        <div class="option-balloon" data-value="2">Problema em Potencial (2)</div>
+                        <div class="option-balloon" data-value="3">Sem Problema (3)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scale-section hidden" id="scale-morse">
+                <h2>Escala de Morse</h2>
+                <p>Pontuação total (0 a 125). Avaliação de Risco de Queda.</p>
+                <hr>
+
+                <div class="assessment-group" data-criterion="morseHistory">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>1. História de quedas nos últimos três meses</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="morseHistorySelect" name="morseHistory" style="display: none;">
+                        <option value="0" selected>Não</option>
+                        <option value="25">Sim</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="morseHistorySelect">
+                        <div class="option-balloon" data-value="0">Não (0)</div>
+                        <div class="option-balloon" data-value="25">Sim (25)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="morseSecondaryDiagnosis">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>2. Diagnóstico Secundário</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="morseSecondaryDiagnosisSelect" name="morseSecondaryDiagnosis" style="display: none;">
+                        <option value="0" selected>Não</option>
+                        <option value="15">Sim</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="morseSecondaryDiagnosisSelect">
+                        <div class="option-balloon" data-value="0">Não (0)</div>
+                        <div class="option-balloon" data-value="15">Sim (15)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="morseAmbulatoryAid">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>3. Auxílio na mobilidade</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="morseAmbulatoryAidSelect" name="morseAmbulatoryAid" style="display: none;">
+                        <option value="0" selected>Nenhum/Acamado/Repouso</option>
+                        <option value="15">Bengala/Muleta/Andador</option>
+                        <option value="30">Mobiliário ou parede</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="morseAmbulatoryAidSelect">
+                        <div class="option-balloon" data-value="0">Nenhum/Acamado (0)</div>
+                        <div class="option-balloon" data-value="15">Bengala/Muleta (15)</div>
+                        <div class="option-balloon" data-value="30">Mobiliário (30)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="morseIVTherapy">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>4. Terapia Endovenosa (Soro/Cateter Epidural/Infusão)</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="morseIVTherapySelect" name="morseIVTherapy" style="display: none;">
+                        <option value="0" selected>Não</option>
+                        <option value="20">Sim</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="morseIVTherapySelect">
+                        <div class="option-balloon" data-value="0">Não (0)</div>
+                        <div class="option-balloon" data-value="20">Sim (20)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="morseGait">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>5. Marcha</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="morseGaitSelect" name="morseGait" style="display: none;">
+                        <option value="0" selected>Normal/Acamado/Cadeira de rodas</option>
+                        <option value="10">Lenta/Fraca</option>
+                        <option value="20">Alterada/Cambaleante</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="morseGaitSelect">
+                        <div class="option-balloon" data-value="0">Normal/Acamado (0)</div>
+                        <div class="option-balloon" data-value="10">Lenta/Fraca (10)</div>
+                        <div class="option-balloon" data-value="20">Alterada/Cambaleante (20)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="morseMentalState">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>6. Estado Mental (Autoavaliação da própria capacidade)</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="morseMentalStateSelect" name="morseMentalState" style="display: none;">
+                        <option value="0" selected>Orientado/Capaz de se reorientar</option>
+                        <option value="15">Desorientado/Esquece limitações</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="morseMentalStateSelect">
+                        <div class="option-balloon" data-value="0">Orientado (0)</div>
+                        <div class="option-balloon" data-value="15">Desorientado (15)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scale-section hidden" id="scale-broncoaspiracao">
+                <h2>Escala de Broncoaspiração</h2>
+                <p>Pontuação total (0 a 6). **1 ponto ou mais indica Alto Risco**.</p>
+                <hr>
+
+                <div class="assessment-group" data-criterion="baVentilation">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>1. Ventilação Mecânica (Invasiva ou Não-Invasiva)</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="baVentilationSelect" name="baVentilation" style="display: none;">
+                        <option value="0" selected>Não</option>
+                        <option value="1">Sim</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="baVentilationSelect">
+                        <div class="option-balloon" data-value="0">Não (0)</div>
+                        <div class="option-balloon" data-value="1">Sim (1)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="baEnteralFeed">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>2. Dieta Enteral ou Sonda Nasogástrica/Gastrostomia</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="baEnteralFeedSelect" name="baEnteralFeed" style="display: none;">
+                        <option value="0" selected>Não</option>
+                        <option value="1">Sim</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="baEnteralFeedSelect">
+                        <div class="option-balloon" data-value="0">Não (0)</div>
+                        <div class="option-balloon" data-value="1">Sim (1)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="baMentalStatus">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>3. Alteração do Status Mental (Escala de Glasgow &lt; 13)</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="baMentalStatusSelect" name="baMentalStatus" style="display: none;">
+                        <option value="0" selected>Normal/Alerta</option>
+                        <option value="1">Rebaixado/Sonolento/Agitado</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="baMentalStatusSelect">
+                        <div class="option-balloon" data-value="0">Normal/Alerta (0)</div>
+                        <div class="option-balloon" data-value="1">Rebaixado (1)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="baNauseaVomit">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>4. Náuseas e/ou Vômitos Frequentes</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="baNauseaVomitSelect" name="baNauseaVomit" style="display: none;">
+                        <option value="0" selected>Não</option>
+                        <option value="1">Sim</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="baNauseaVomitSelect">
+                        <div class="option-balloon" data-value="0">Não (0)</div>
+                        <div class="option-balloon" data-value="1">Sim (1)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="baHistory">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>5. Histórico de Disfagia/Tosse/Engasgo durante a alimentação</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="baHistorySelect" name="baHistory" style="display: none;">
+                        <option value="0" selected>Não</option>
+                        <option value="1">Sim</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="baHistorySelect">
+                        <div class="option-balloon" data-value="0">Não (0)</div>
+                        <div class="option-balloon" data-value="1">Sim (1)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="baComorbidities">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>6. Doenças Neurológicas, Respiratórias ou Cirurgia de Cabeça/Pescoço</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="baComorbiditiesSelect" name="baComorbidities" style="display: none;">
+                        <option value="0" selected>Não</option>
+                        <option value="1">Sim</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="baComorbiditiesSelect">
+                        <div class="option-balloon" data-value="0">Não (0)</div>
+                        <div class="option-balloon" data-value="1">Sim (1)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scale-section hidden" id="scale-trombose">
+                <h2>Escala de Trombose (Caprini - Risco de TEV em Pós-Operatório)</h2>
+                <p>Pontuação total. Avaliação de Risco para Tromboembolismo Venoso (TEV).</p>
+                <hr>
+
+                <div class="assessment-group" data-criterion="capriniRiskBase">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Fatores de Risco Base (1 Ponto por item)</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="capriniRiskBaseSelect" name="capriniRiskBase" style="display: none;">
+                        <option value="0" selected>Nenhum Fator</option>
+                        <option value="1">Idade 41-60 anos</option>
+                        <option value="1">Cirurgia de Pequeno Porte (Duração &lt; 45min)</option>
+                        <option value="1">Histórico de TVP familiar</option>
+                        <option value="1">Imobilização em gesso</option>
+                        <option value="1">Terapia hormonal/Anticoncepcional Oral</option>
+                        <option value="1">Obesidade (IMC > 25 kg/m²)</option>
+                        <option value="1">Varizes importantes</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="capriniRiskBaseSelect">
+                        <div class="option-balloon" data-value="0">Nenhum Fator (0)</div>
+                        <div class="option-balloon" data-value="1">Idade 41-60 (1)</div>
+                        <div class="option-balloon" data-value="1">Pequena Cirurgia (1)</div>
+                        <div class="option-balloon" data-value="1">Hist. Familiar TVP (1)</div>
+                        <div class="option-balloon" data-value="1">Imobilização (1)</div>
+                        <div class="option-balloon" data-value="1">Terapia Hormonal (1)</div>
+                        <div class="option-balloon" data-value="1">Obesidade (1)</div>
+                        <div class="option-balloon" data-value="1">Varizes Graves (1)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="capriniRiskModerate">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Fatores de Risco Moderado (2 Pontos por item)</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="capriniRiskModerateSelect" name="capriniRiskModerate" style="display: none;">
+                        <option value="0" selected>Nenhum Fator</option>
+                        <option value="2">Idade 61-75 anos</option>
+                        <option value="2">Restrição ao leito (7 dias ou mais)</option>
+                        <option value="2">Histórico de TVP/TEP pessoal</option>
+                        <option value="2">Artroscopia (joelho/quadril)</option>
+                        <option value="2">Cateter venoso central</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="capriniRiskModerateSelect">
+                        <div class="option-balloon" data-value="0">Nenhum Fator (0)</div>
+                        <div class="option-balloon" data-value="2">Idade 61-75 (2)</div>
+                        <div class="option-balloon" data-value="2">Restrição ao leito > 7 dias (2)</div>
+                        <div class="option-balloon" data-value="2">Hist. Pessoal TVP/TEP (2)</div>
+                        <div class="option-balloon" data-value="2">Artroscopia (2)</div>
+                        <div class="option-balloon" data-value="2">Cateter Central (2)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="capriniRiskHigh">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Fatores de Risco Alto (3 Pontos por item)</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="capriniRiskHighSelect" name="capriniRiskHigh" style="display: none;">
+                        <option value="0" selected>Nenhum Fator</option>
+                        <option value="3">Idade > 75 anos</option>
+                        <option value="3">Câncer Ativo</option>
+                        <option value="3">Histórico de Hipercoagulabilidade</option>
+                        <option value="3">Cirurgia de Quadril/Joelho/Fratura pélvica/MMII</option>
+                        <option value="3">Cirurgia Eletiva Abdominal, Pélvica, Torácica ou Vascular (&gt; 60 min)</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="capriniRiskHighSelect">
+                        <div class="option-balloon" data-value="0">Nenhum Fator (0)</div>
+                        <div class="option-balloon" data-value="3">Idade > 75 (3)</div>
+                        <div class="option-balloon" data-value="3">Câncer Ativo (3)</div>
+                        <div class="option-balloon" data-value="3">Hipercoagulabilidade (3)</div>
+                        <div class="option-balloon" data-value="3">Cirurgia Ortopédica Maior (3)</div>
+                        <div class="option-balloon" data-value="3">Grande Cirurgia (Abdominal/Torácica/Vascular) (3)</div>
+                    </div>
+                </div>
+
+                <div class="assessment-group" data-criterion="capriniRiskVeryHigh">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Fatores de Risco Muito Alto</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="capriniRiskVeryHighSelect" name="capriniRiskVeryHigh" style="display: none;">
+                        <option value="0" selected>Nenhum Fator</option>
+                        <option value="4">Paralisia de MMII</option>
+                        <option value="5">Trauma de Coluna com Paralisia</option>
+                        <option value="5">Trombose Venosa Aguda (TVA) - dentro de 1 mês</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="capriniRiskVeryHighSelect">
+                        <div class="option-balloon" data-value="0">Nenhum Fator (0)</div>
+                        <div class="option-balloon" data-value="4">Paralisia de MMII (4)</div>
+                        <div class="option-balloon" data-value="5">Trauma Coluna/Paralisia (5)</div>
+                        <div class="option-balloon" data-value="5">Trombose Aguda Recente (5)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scale-section hidden" id="scale-maddox">
+                <h2>Escala de Maddox (Avaliação de Flebite)</h2>
+                <p>Selecione o grau de flebite mais grave no sítio de punção. </p>
+                <hr>
+
+                <div class="assessment-group" data-criterion="maddoxGrade">
+                    <div class="criterion-header" onclick="toggleOptions(this)">
+                        <label>Grau de Flebite (Selecione um)</label>
+                        <span class="chevron">▶</span>
+                    </div>
+                    <select id="maddoxGradeSelect" name="maddoxGrade" style="display: none;">
+                        <option value="0" selected>Grau 0: Sem sinais de flebite (Sítio íntegro)</option>
+                        <option value="1">Grau 1: Eritema com ou sem dor local (Possível início).</option>
+                        <option value="2">Grau 2: Dor, com eritema e/ou edema (Flebite inicial).</option>
+                        <option value="3">Grau 3: Sinais do Grau 2 + cordão fibroso palpável, menor que 8cm (Flebite em evolução).</option>
+                        <option value="4">Grau 4: Sinais do Grau 2 + cordão fibroso palpável, maior que 8cm (Flebite avançada).</option>
+                        <option value="5">Grau 5: Sinais do Grau 4 + drenagem purulenta ou trombose venosa aparente (Tromboflebite).</option>
+                    </select>
+                    <div class="option-container hidden-by-default" data-select-id="maddoxGradeSelect">
+                        <div class="option-balloon" data-value="0">Grau 0: Sem sinais (0)</div>
+                        <div class="option-balloon" data-value="1">Grau 1: Eritema c/ ou s/ dor (1)</div>
+                        <div class="option-balloon" data-value="2">Grau 2: Dor, Eritema e/ou Edema (2)</div>
+                        <div class="option-balloon" data-value="3">Grau 3: Sinais Grau 2 + Cordão Palpável &lt; 8cm (3)</div>
+                        <div class="option-balloon" data-value="4">Grau 4: Sinais Grau 2 + Cordão Palpável &gt; 8cm (4)</div>
+                        <div class="option-balloon" data-value="5">Grau 5: Sinais Grau 4 + Pus/Trombose (5)</div>
+                    </div>
+                </div>
+            </div>
+            
+            </form>
+
+      <div class="container-button" id="main-actions" style="margin-top: 20px; background: #eee; padding: 15px; border-radius: 8px; border: 1px solid #ccc; text-align: center;">
+        
+        <button type="button" class="button" onclick="btGerar()" style="background-color: var(--color-primary-blue); min-width: 250px; font-weight: bold;"> Gerar Resultado</button>
+
+        <div id="result" style="display:none; margin-top: 20px; text-align: left;">
+            <div id="result-box-container" style="border: 2px solid var(--color-primary-blue); padding: 15px; border-radius: 8px; background-color: #f0f7ff; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <h3 id="result-scale-title" style="color: var(--color-primary-blue); margin-top: 0; border-bottom: 1px solid #ccc; text-align: center;">Resultado Gerado</h3>
+                
+                <div class="patient-data-summary" style="background: #fff; padding: 10px; margin: 10px 0; border: 1px solid #ddd; font-size: 13px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; border-radius: 4px;">
+                    <span><strong>Paciente:</strong> <span id="r_name"></span></span>
+                    <span><strong>Nasc:</strong> <span id="r_birth"></span></span>
+                    <span><strong>Prontuário:</strong> <span id="r_record"></span></span>
+
+                </div>
+
+                <div class="details-section">
+                    <div class="score-summary-box" style="background: #fff; padding: 10px; border-radius: 5px; margin-bottom: 10px; border-left: 5px solid var(--color-primary-blue);">
+                        <p style="margin: 5px 0; font-size: 15px;"><strong>Pontuação Total:</strong> <span id="totalScore" style="font-weight: bold; color: #d32f2f;"></span></p>
+                        <p style="margin: 5px 0; font-size: 15px;"><strong>Grau de Risco:</strong> <span id="careLevel" style="font-weight: bold; color: #d32f2f;"></span></p>
+                    </div>
+                    <div id="selectedOptionsContainer"></div>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px; text-align: center; display: flex; justify-content: center; gap: 15px;">
+                <button type="button" class="button" onclick="btSalvar()" style="background-color: var(--color-green-hospital); min-width: 180px;"> Salvar na Lista ↓</button>
+                <button type="button" class="button" onclick="limparTelaAtual()" style="background-color: var(--color-red-symbolic); min-width: 180px;">Limpar Escala Atual</button>
+            
+            </div>
+        </div>
+    </div>
+
+    <div id="area-lista-salva" style="margin-top: 30px; border-top: 2px solid #333; padding-top: 20px;">
+        <h2 class="no-print" style="text-align: center; color: #555; font-size: 16px;">HISTÓRICO DE ESCALAS SALVAS</h2>
+        
+       <div id="lista-resultados-acumulados">
+    </div>
+
+<div id="footer-relatorio" class="footer-relatorio no-print" style="display:none;">
+    <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button class="button" onclick="printResult()" style="background-color: var(--color-green-hospital); flex: 2;">
+            Imprimir Relatório Completo
+        </button>
+        <button class="button" onclick="limparEscalas()" style="background-color: #000; flex: 1;">
+            Limpar Tudo
+        </button>
+    </div>
+</div>
+
+    <script>
+        function btGerar() {
+            if (typeof generateResult === "function") {
+                generateResult(); 
+            }
+        }
+
+        function btSalvar() {
+            if (typeof salvarEscalaAtual === "function") {
+                salvarEscalaAtual(); 
+            }
+        }
+
+        function limparTelaAtual() {
+            document.getElementById('result').style.display = 'none';
+            const activeSection = document.getElementById(`scale-${currentScale}`);
+            if(activeSection) {
+                activeSection.querySelectorAll('.option-balloon').forEach(b => b.classList.remove('selected'));
+                activeSection.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => console.log())
+      .catch(err => console.log("Erro no registro:", err));
+  }
+</script>
+    
+</body>
+</html>
