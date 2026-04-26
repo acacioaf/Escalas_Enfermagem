@@ -12,7 +12,9 @@ const FIELD_LABELS = {
 };
 
 let currentScale = 'fugulin';
-let escalasSalvas = []; 
+let escalasSalvas = [];
+
+// --- FUNÇÕES DE NAVEGAÇÃO E UI ---
 
 function showScale(scaleId) {
     currentScale = scaleId;
@@ -20,7 +22,8 @@ function showScale(scaleId) {
     document.querySelectorAll('.scale-btn').forEach(btn => btn.classList.remove('active'));
     const target = document.getElementById(`scale-${scaleId}`);
     if (target) target.classList.remove('hidden');
-    const activeBtn = Array.from(document.querySelectorAll('.scale-btn')).find(btn => btn.getAttribute('onclick').includes(scaleId));
+
+    const activeBtn = Array.from(document.querySelectorAll('.scale-btn')).find(btn => btn.getAttribute('onclick')?.includes(scaleId));
     if (activeBtn) activeBtn.classList.add('active');
     document.getElementById('result').style.display = 'none';
 }
@@ -33,12 +36,17 @@ function toggleOptions(header) {
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('option-balloon')) {
         const container = e.target.parentElement;
-        const select = document.getElementById(container.getAttribute('data-select-id'));
-        container.querySelectorAll('.option-balloon').forEach(b => b.classList.remove('selected'));
-        e.target.classList.add('selected');
-        select.value = e.target.getAttribute('data-value');
+        const selectId = container.getAttribute('data-select-id');
+        const select = document.getElementById(selectId);
+        if (select) {
+            container.querySelectorAll('.option-balloon').forEach(b => b.classList.remove('selected'));
+            e.target.classList.add('selected');
+            select.value = e.target.getAttribute('data-value');
+        }
     }
 });
+
+// --- LÓGICA DE CÁLCULO E SALVAMENTO ---
 
 function generateResult() {
     const activeSection = document.getElementById(`scale-${currentScale}`);
@@ -48,11 +56,12 @@ function generateResult() {
 
     document.getElementById('totalScore').innerText = total;
     document.getElementById('careLevel').innerText = SCALES_INFO[currentScale].getRiskLevel(total);
-    
+
     const container = document.getElementById('selectedOptionsContainer');
     container.innerHTML = '<h4>Detalhes Selecionados:</h4>';
     const list = document.createElement('ul');
     list.style.listStyle = 'none'; list.style.padding = '0';
+
     activeSection.querySelectorAll('.assessment-group').forEach(group => {
         const sel = group.querySelector('select');
         const li = document.createElement('li');
@@ -66,9 +75,8 @@ function generateResult() {
 }
 
 function salvarEscalaAtual() {
-    // Anti-duplicação
     escalasSalvas = escalasSalvas.filter(e => e.id !== currentScale);
-    
+
     const novaEscala = {
         id: currentScale,
         titulo: SCALES_INFO[currentScale].title,
@@ -81,7 +89,7 @@ function salvarEscalaAtual() {
     renderizarListaCompleta();
 
     document.querySelectorAll('.scale-btn').forEach(btn => {
-        if (btn.getAttribute('onclick').includes(currentScale)) {
+        if (btn.getAttribute('onclick')?.includes(currentScale)) {
             btn.classList.add('concluida');
             if (!btn.innerHTML.includes('✓')) btn.innerHTML += ' ✓';
         }
@@ -93,31 +101,41 @@ function salvarEscalaAtual() {
 }
 
 function removerEscala(id) {
-     {
-        escalasSalvas = escalasSalvas.filter(e => e.id !== id);
-        
- 
-        document.querySelectorAll('.scale-btn').forEach(btn => {
-            if (btn.getAttribute('onclick').includes(id)) {
-                btn.classList.remove('concluida');
-                btn.innerHTML = btn.innerHTML.replace(' ✓', '');
-            }
-        });
-
-        renderizarListaCompleta();
-        if(escalasSalvas.length === 0) document.getElementById('footer-relatorio').style.display = 'none';
-    }
+    escalasSalvas = escalasSalvas.filter(e => e.id !== id);
+    document.querySelectorAll('.scale-btn').forEach(btn => {
+        if (btn.getAttribute('onclick')?.includes(id)) {
+            btn.classList.remove('concluida');
+            btn.innerHTML = btn.innerHTML.replace(' ✓', '');
+        }
+    });
+    renderizarListaCompleta();
+    if (escalasSalvas.length === 0) document.getElementById('footer-relatorio').style.display = 'none';
 }
 
+// --- IMPRESSÃO E RELATÓRIO ---
 function renderizarListaCompleta() {
     const container = document.getElementById('lista-resultados-acumulados');
     if (!container) return;
     container.innerHTML = "";
 
-
     const nome = document.getElementById('patientName').value || "__________";
     const prontuario = document.getElementById('patientRecord').value || "__________";
-    const dataNasc = document.getElementById('patientBirth').value || "__________";
+
+    // --- CORREÇÃO DA DATA DE NASCIMENTO ---
+    const dataNascRaw = document.getElementById('patientBirth').value; // Pega o 2026-04-26
+    let dataNascFormatada = "__________";
+
+    if (dataNascRaw) {
+        const partes = dataNascRaw.split('-'); // Quebra o traço
+        dataNascFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`; // Remonta como 26/04/2026
+    }
+
+    // --- CORREÇÃO DA DATA DE HOJE ---
+    const hoje = new Date();
+    const dia = String(hoje.getDate()).padStart(2, '0');
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+    const ano = hoje.getFullYear();
+    const dataHoje = `${dia}/${mes}/${ano}`;
 
     const headerHTML = `
         <div class="header-print">
@@ -127,97 +145,72 @@ function renderizarListaCompleta() {
         <div class="patient-data-print">
             <div><strong>Paciente:</strong> ${nome}</div>
             <div><strong>Prontuário:</strong> ${prontuario}</div>
-            <div><strong>DN:</strong> ${dataNasc}</div>
+            <div><strong>Data de Nasc:</strong> ${dataNascFormatada} <span style="margin-left:10px;">|</span> <strong>Data:</strong> ${dataHoje}</div>
         </div>
     `;
 
     container.innerHTML = headerHTML;
+    // ... resto da função (o loop das escalas e assinatura)
 
+    container.innerHTML = headerHTML;
 
     escalasSalvas.forEach(escala => {
         const escalaDiv = document.createElement('div');
         escalaDiv.className = "escala-item-impressao";
-        
         escalaDiv.innerHTML = `
-            <div style="background:#f0f0f0; padding:5px; font-weight:bold; display:flex; justify-content:space-between;">
-                <span>${escala.titulo}</span>
-                <span>Pontos: ${escala.pontuacao} - ${escala.risco}</span>
-            </div>
-            <div class="escala-detalhes-grid" style="padding:10px;">
-                ${escala.detalhes}
-            </div>
-            <div class="no-print" style="text-align:right; padding:5px;">
-                <button onclick="removerEscala('${escala.id}')" style="background:#dc3545; color:white; border:none; cursor:pointer; border-radius:3px;">Remover ✖</button>
-            </div>
-        `;
+    <div style="background:#f0f0f0; padding:5px; border-bottom:1px solid #ccc;">
+        <div style="font-weight:bold; font-size:10pt;">${escala.titulo}</div>
+        <div style="font-size:9pt; color:#333;">Pontos: ${escala.pontuacao} - ${escala.risco}</div>
+    </div>
+    <div class="escala-detalhes-grid" style="padding:8px; font-size:8pt;">
+        ${escala.detalhes}
+    </div>
+    <div class="no-print" style="text-align:right; padding:5px;">
+        <button onclick="removerEscala('${escala.id}')" style="background:#dc3545; color:white; border:none; padding:5px 10px; cursor:pointer; border-radius:3px;">Remover ✖</button>
+    </div>
+`;
         container.appendChild(escalaDiv);
     });
 
- 
     const sigDiv = document.createElement('div');
     sigDiv.className = "signature-area";
-    sigDiv.innerHTML = `<p style="margin-top:5px;">Assinatura do Profissional Responsável</p>`;
+    sigDiv.style.marginTop = "30px";
+    sigDiv.innerHTML = `<div style="border-top:1px solid #faf7f7; width:300px; margin:auto; text-align:center; padding-top:5px;">Assinatura do Profissional Responsável</div>`;
     container.appendChild(sigDiv);
 }
 
 function printResult() {
-    
-    const now = new Date();
-    const dataHora = `Relatório gerado em: ${now.toLocaleDateString()} às ${now.toLocaleTimeString()}`;
-    
-    let footer = document.getElementById('print-footer');
-    if (!footer) {
-        footer = document.createElement('div');
-        footer.id = 'print-footer';
-        footer.style.textAlign = 'center';
-        footer.style.fontSize = '8pt';
-        footer.style.marginTop = '20px';
-        document.getElementById('lista-resultados-acumulados').appendChild(footer);
-    }
-    footer.innerText = dataHora;
-
-   
-function printResult() {
-
     if (escalasSalvas.length === 0) {
-        alert("Não há escalas salvas para imprimir.");
+        alert("Não há escalas salvas para imprimir. Salve ao menos uma avaliação.");
         return;
     }
-
-
-    renderizarEscalasSalvas();
-
-   
-    setTimeout(() => {
-        window.print();
-    }, 500);
+    renderizarListaCompleta();
+    setTimeout(() => { window.print(); }, 500);
 }
-
 
 function limparEscalas() {
-    if (confirm("Tem certeza que deseja limpar todos os dados do paciente e o histórico de escalas?")) {
-    
-        escalasSalvas = [];
-        
-   
-        document.getElementById('patientName').value = "";
-        document.getElementById('patientBirth').value = "";
-        document.getElementById('patientRecord').value = "";
-        
-     
-        document.querySelectorAll('.option-balloon').forEach(b => b.classList.remove('selected'));
-        document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-        
-   
-        document.getElementById('result').style.display = 'none';
-        renderizarEscalasSalvas();
-        
+    if (!confirm("Deseja realmente apagar todos os dados do paciente e as escalas salvas?")) return;
 
-        document.getElementById('footer-relatorio').style.display = 'none';
-        
-        alert("Dados limpos com sucesso!");
-    }
-}
+    escalasSalvas = [];
 
-    window.print();
+    // Limpar inputs
+    ['patientName', 'patientBirth', 'patientRecord'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+    });
+
+    // Resetar visuais
+    document.querySelectorAll('.option-balloon').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+    document.querySelectorAll('.scale-btn').forEach(btn => {
+        btn.classList.remove('concluida');
+        btn.innerHTML = btn.innerHTML.replace(' ✓', '');
+    });
+
+    const resultDiv = document.getElementById('result');
+    if (resultDiv) resultDiv.style.display = 'none';
+
+    document.getElementById('footer-relatorio').style.display = 'none';
+    renderizarListaCompleta();
+    alert("Sistema limpo!");
 }

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escalas de Enfermagem</title>
-    
+
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0ea5a4">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,7 +23,7 @@
             <div class="header-text-block">
                 <h1>Escala de Avaliação dos Pacientes</h1>
             </div>
-            <div style="width: 180px;"></div> 
+            <div style="width: 180px;"></div>
         </div>
 
         <div class="patient-info">
@@ -45,13 +46,14 @@
         </div>
 
         <div class="scale-menu">
-    <button id="btn-fugulin" class="scale-btn active" onclick="showScale('fugulin')">Fugulin</button>
-    <button id="id-braden" class="scale-btn" onclick="showScale('braden')">Braden</button>
-    <button id="id-morse" class="scale-btn" onclick="showScale('morse')">Morse</button>
-    <button id="id-broncoaspiracao" class="scale-btn" onclick="showScale('broncoaspiracao')">Broncoaspiração</button>
-    <button id="id-trombose" class="scale-btn" onclick="showScale('trombose')">Trombose</button>
-    <button id="id-maddox" class="scale-btn" onclick="showScale('maddox')">Maddox</button>
-</div>
+            <button id="btn-fugulin" class="scale-btn active" onclick="showScale('fugulin')">Fugulin</button>
+            <button id="id-braden" class="scale-btn" onclick="showScale('braden')">Braden</button>
+            <button id="id-morse" class="scale-btn" onclick="showScale('morse')">Morse</button>
+            <button id="id-broncoaspiracao" class="scale-btn"
+                onclick="showScale('broncoaspiracao')">Broncoaspiração</button>
+            <button id="id-trombose" class="scale-btn" onclick="showScale('trombose')">Trombose</button>
+            <button id="id-maddox" class="scale-btn" onclick="showScale('maddox')">Maddox</button>
+        </div>
 
         <form id="assessmentForm">
 
@@ -62,8 +64,9 @@
                 <div class="assessment-group" data-criterion="mentalState">
                     <div class="criterion-header" onclick="toggleOptions(this)">
                         <label>Estado Mental</label>
-                        <span class="chevron">▶</span> </div>
-                    
+                        <span class="chevron">▶</span>
+                    </div>
+
                     <select id="mentalStateSelect" name="mentalState" style="display: none;">
                         <option value="0" selected>Orientado no tempo e espaço</option>
                         <option value="1">Períodos de desorientação</option>
@@ -84,7 +87,7 @@
                         <label>Oxigenação</label>
                         <span class="chevron">▶</span>
                     </div>
-                     <select id="oxygenationSelect" name="oxygenation" style="display: none;">
+                    <select id="oxygenationSelect" name="oxygenation" style="display: none;">
                         <option value="0" selected>Não depende de oxigênio</option>
                         <option value="1">Uso contínuo de máscara ou cateter de oxigênio</option>
                         <option value="2">Uso intermitente de cateter ou máscara de oxigenoterapia</option>
@@ -92,8 +95,10 @@
                     </select>
                     <div class="option-container hidden-by-default" data-select-id="oxygenationSelect">
                         <div class="option-balloon" data-value="0">Não depende de oxigênio (0)</div>
-                        <div class="option-balloon" data-value="1">Uso contínuo de máscara ou cateter de oxigênio (1)</div>
-                        <div class="option-balloon" data-value="2">Uso intermitente de cateter ou máscara de oxigenoterapia (2)</div>
+                        <div class="option-balloon" data-value="1">Uso contínuo de máscara ou cateter de oxigênio (1)
+                        </div>
+                        <div class="option-balloon" data-value="2">Uso intermitente de cateter ou máscara de
+                            oxigenoterapia (2)</div>
                         <div class="option-balloon" data-value="3">Ventilação mecânica (3)</div>
                     </div>
                 </div>
@@ -116,7 +121,7 @@
                         <div class="option-balloon" data-value="3">Controle a cada 2h ou menos (3)</div>
                     </div>
                 </div>
-                
+
                 <div class="assessment-group" data-criterion="mobility">
                     <div class="criterion-header" onclick="toggleOptions(this)">
                         <label>Motilidade</label>
@@ -244,8 +249,10 @@
                     </select>
                     <div class="option-container hidden-by-default" data-select-id="woundIntegritySelect">
                         <div class="option-balloon" data-value="0">Pele íntegra (0)</div>
-                        <div class="option-balloon" data-value="1">Presença de equimoses/hiperemia/pequenas lesões (1)</div>
-                        <div class="option-balloon" data-value="2">Solução de continuidade (subcutâneo/muscular/incisão/ostomia) (2)</div>
+                        <div class="option-balloon" data-value="1">Presença de equimoses/hiperemia/pequenas lesões (1)
+                        </div>
+                        <div class="option-balloon" data-value="2">Solução de continuidade
+                            (subcutâneo/muscular/incisão/ostomia) (2)</div>
                         <div class="option-balloon" data-value="3">Solução de continuidade extensa (3)</div>
                     </div>
                 </div>
@@ -289,7 +296,7 @@
                 </div>
 
             </div>
-            
+
             <div class="scale-section hidden" id="scale-braden">
                 <h2>Escala de Braden</h2>
                 <p>Pontuação total (6 a 23). **Quanto menor a pontuação, maior o risco** de Lesão por Pressão.</p>
@@ -507,7 +514,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="scale-section hidden" id="scale-broncoaspiracao">
                 <h2>Escala de Broncoaspiração</h2>
                 <p>Pontuação total (0 a 6). **1 ponto ou mais indica Alto Risco**.</p>
@@ -603,7 +610,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="scale-section hidden" id="scale-trombose">
                 <h2>Escala de Trombose (Caprini - Risco de TEV em Pós-Operatório)</h2>
                 <p>Pontuação total. Avaliação de Risco para Tromboembolismo Venoso (TEV).</p>
@@ -670,7 +677,8 @@
                         <option value="3">Câncer Ativo</option>
                         <option value="3">Histórico de Hipercoagulabilidade</option>
                         <option value="3">Cirurgia de Quadril/Joelho/Fratura pélvica/MMII</option>
-                        <option value="3">Cirurgia Eletiva Abdominal, Pélvica, Torácica ou Vascular (&gt; 60 min)</option>
+                        <option value="3">Cirurgia Eletiva Abdominal, Pélvica, Torácica ou Vascular (&gt; 60 min)
+                        </option>
                     </select>
                     <div class="option-container hidden-by-default" data-select-id="capriniRiskHighSelect">
                         <div class="option-balloon" data-value="0">Nenhum Fator (0)</div>
@@ -678,7 +686,8 @@
                         <div class="option-balloon" data-value="3">Câncer Ativo (3)</div>
                         <div class="option-balloon" data-value="3">Hipercoagulabilidade (3)</div>
                         <div class="option-balloon" data-value="3">Cirurgia Ortopédica Maior (3)</div>
-                        <div class="option-balloon" data-value="3">Grande Cirurgia (Abdominal/Torácica/Vascular) (3)</div>
+                        <div class="option-balloon" data-value="3">Grande Cirurgia (Abdominal/Torácica/Vascular) (3)
+                        </div>
                     </div>
                 </div>
 
@@ -701,7 +710,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="scale-section hidden" id="scale-maddox">
                 <h2>Escala de Maddox (Avaliação de Flebite)</h2>
                 <p>Selecione o grau de flebite mais grave no sítio de punção. </p>
@@ -716,103 +725,125 @@
                         <option value="0" selected>Grau 0: Sem sinais de flebite (Sítio íntegro)</option>
                         <option value="1">Grau 1: Eritema com ou sem dor local (Possível início).</option>
                         <option value="2">Grau 2: Dor, com eritema e/ou edema (Flebite inicial).</option>
-                        <option value="3">Grau 3: Sinais do Grau 2 + cordão fibroso palpável, menor que 8cm (Flebite em evolução).</option>
-                        <option value="4">Grau 4: Sinais do Grau 2 + cordão fibroso palpável, maior que 8cm (Flebite avançada).</option>
-                        <option value="5">Grau 5: Sinais do Grau 4 + drenagem purulenta ou trombose venosa aparente (Tromboflebite).</option>
+                        <option value="3">Grau 3: Sinais do Grau 2 + cordão fibroso palpável, menor que 8cm (Flebite em
+                            evolução).</option>
+                        <option value="4">Grau 4: Sinais do Grau 2 + cordão fibroso palpável, maior que 8cm (Flebite
+                            avançada).</option>
+                        <option value="5">Grau 5: Sinais do Grau 4 + drenagem purulenta ou trombose venosa aparente
+                            (Tromboflebite).</option>
                     </select>
                     <div class="option-container hidden-by-default" data-select-id="maddoxGradeSelect">
                         <div class="option-balloon" data-value="0">Grau 0: Sem sinais (0)</div>
                         <div class="option-balloon" data-value="1">Grau 1: Eritema c/ ou s/ dor (1)</div>
                         <div class="option-balloon" data-value="2">Grau 2: Dor, Eritema e/ou Edema (2)</div>
-                        <div class="option-balloon" data-value="3">Grau 3: Sinais Grau 2 + Cordão Palpável &lt; 8cm (3)</div>
-                        <div class="option-balloon" data-value="4">Grau 4: Sinais Grau 2 + Cordão Palpável &gt; 8cm (4)</div>
+                        <div class="option-balloon" data-value="3">Grau 3: Sinais Grau 2 + Cordão Palpável &lt; 8cm (3)
+                        </div>
+                        <div class="option-balloon" data-value="4">Grau 4: Sinais Grau 2 + Cordão Palpável &gt; 8cm (4)
+                        </div>
                         <div class="option-balloon" data-value="5">Grau 5: Sinais Grau 4 + Pus/Trombose (5)</div>
                     </div>
                 </div>
             </div>
-            
-            </form>
 
-      <div class="container-button" id="main-actions" style="margin-top: 20px; background: #eee; padding: 15px; border-radius: 8px; border: 1px solid #ccc; text-align: center;">
-        
-        <button type="button" class="button" onclick="btGerar()" style="background-color: var(--color-primary-blue); min-width: 250px; font-weight: bold;"> Gerar Resultado</button>
+        </form>
 
-        <div id="result" style="display:none; margin-top: 20px; text-align: left;">
-            <div id="result-box-container" style="border: 2px solid var(--color-primary-blue); padding: 15px; border-radius: 8px; background-color: #f0f7ff; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                <h3 id="result-scale-title" style="color: var(--color-primary-blue); margin-top: 0; border-bottom: 1px solid #ccc; text-align: center;">Resultado Gerado</h3>
-                
-                <div class="patient-data-summary" style="background: #fff; padding: 10px; margin: 10px 0; border: 1px solid #ddd; font-size: 13px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; border-radius: 4px;">
-                    <span><strong>Paciente:</strong> <span id="r_name"></span></span>
-                    <span><strong>Nasc:</strong> <span id="r_birth"></span></span>
-                    <span><strong>Prontuário:</strong> <span id="r_record"></span></span>
+        <div class="container-button" id="main-actions"
+            style="margin-top: 20px; background: #eee; padding: 15px; border-radius: 8px; border: 1px solid #ccc; text-align: center;">
 
-                </div>
+            <button type="button" class="button" onclick="btGerar()"
+                style="background-color: var(--color-primary-blue); min-width: 250px; font-weight: bold;"> Gerar
+                Resultado</button>
 
-                <div class="details-section">
-                    <div class="score-summary-box" style="background: #fff; padding: 10px; border-radius: 5px; margin-bottom: 10px; border-left: 5px solid var(--color-primary-blue);">
-                        <p style="margin: 5px 0; font-size: 15px;"><strong>Pontuação Total:</strong> <span id="totalScore" style="font-weight: bold; color: #d32f2f;"></span></p>
-                        <p style="margin: 5px 0; font-size: 15px;"><strong>Grau de Risco:</strong> <span id="careLevel" style="font-weight: bold; color: #d32f2f;"></span></p>
+            <div id="result" style="display:none; margin-top: 20px; text-align: left;">
+                <div id="result-box-container"
+                    style="border: 2px solid var(--color-primary-blue); padding: 15px; border-radius: 8px; background-color: #f0f7ff; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <h3 id="result-scale-title"
+                        style="color: var(--color-primary-blue); margin-top: 0; border-bottom: 1px solid #ccc; text-align: center;">
+                        Resultado Gerado</h3>
+
+                    <div class="patient-data-summary"
+                        style="background: #fff; padding: 10px; margin: 10px 0; border: 1px solid #ddd; font-size: 13px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; border-radius: 4px;">
+                        <span><strong>Paciente:</strong> <span id="r_name"></span></span>
+                        <span><strong>Nasc:</strong> <span id="r_birth"></span></span>
+                        <span><strong>Prontuário:</strong> <span id="r_record"></span></span>
+
                     </div>
-                    <div id="selectedOptionsContainer"></div>
-                </div>
-            </div>
 
-            <div style="margin-top: 15px; text-align: center; display: flex; justify-content: center; gap: 15px;">
-                <button type="button" class="button" onclick="btSalvar()" style="background-color: var(--color-green-hospital); min-width: 180px;"> Salvar na Lista ↓</button>
-                <button type="button" class="button" onclick="limparTelaAtual()" style="background-color: var(--color-red-symbolic); min-width: 180px;">Limpar Escala Atual</button>
-            
+                    <div class="details-section">
+                        <div class="score-summary-box"
+                            style="background: #fff; padding: 10px; border-radius: 5px; margin-bottom: 10px; border-left: 5px solid var(--color-primary-blue);">
+                            <p style="margin: 5px 0; font-size: 15px;"><strong>Pontuação Total:</strong> <span
+                                    id="totalScore" style="font-weight: bold; color: #d32f2f;"></span></p>
+                            <p style="margin: 5px 0; font-size: 15px;"><strong>Grau de Risco:</strong> <span
+                                    id="careLevel" style="font-weight: bold; color: #d32f2f;"></span></p>
+                        </div>
+                        <div id="selectedOptionsContainer"></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px; text-align: center; display: flex; justify-content: center; gap: 15px;">
+                    <button type="button" class="button" onclick="btSalvar()"
+                        style="background-color: var(--color-green-hospital); min-width: 180px;"> Salvar na Lista
+                        ↓</button>
+                    <button type="button" class="button" onclick="limparTelaAtual()"
+                        style="background-color: var(--color-red-symbolic); min-width: 180px;">Limpar Escala
+                        Atual</button>
+
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="area-lista-salva" style="margin-top: 30px; border-top: 2px solid #333; padding-top: 20px;">
-        <h2 class="no-print" style="text-align: center; color: #555; font-size: 16px;">HISTÓRICO DE ESCALAS SALVAS</h2>
-        
-       <div id="lista-resultados-acumulados">
-    </div>
+        <div id="area-lista-salva" style="margin-top: 30px; border-top: 2px solid #333; padding-top: 20px;">
+            <h2 class="no-print" style="text-align: center; color: #555; font-size: 16px;">HISTÓRICO DE ESCALAS SALVAS
+            </h2>
 
-<div id="footer-relatorio" class="footer-relatorio no-print" style="display:none;">
-    <div style="display: flex; gap: 10px; margin-top: 20px;">
-        <button class="button" onclick="printResult()" style="background-color: var(--color-green-hospital); flex: 2;">
-            Imprimir Relatório Completo
-        </button>
-        <button class="button" onclick="limparEscalas()" style="background-color: #000; flex: 1;">
-            Limpar Tudo
-        </button>
-    </div>
-</div>
+            <div id="lista-resultados-acumulados">
+            </div>
 
-    <script>
-        function btGerar() {
-            if (typeof generateResult === "function") {
-                generateResult(); 
-            }
-        }
+            <div id="footer-relatorio" class="footer-relatorio no-print" style="display:none;">
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="button" onclick="printResult()"
+                        style="background-color: var(--color-green-hospital); flex: 2;">
+                        Imprimir Relatório Completo
+                    </button>
+                    <button class="button" onclick="limparEscalas()" style="background-color: #000; flex: 1;">
+                        Limpar Tudo
+                    </button>
+                </div>
+            </div>
 
-        function btSalvar() {
-            if (typeof salvarEscalaAtual === "function") {
-                salvarEscalaAtual(); 
-            }
-        }
+            <script>
+                function btGerar() {
+                    if (typeof generateResult === "function") {
+                        generateResult();
+                    }
+                }
 
-        function limparTelaAtual() {
-            document.getElementById('result').style.display = 'none';
-            const activeSection = document.getElementById(`scale-${currentScale}`);
-            if(activeSection) {
-                activeSection.querySelectorAll('.option-balloon').forEach(b => b.classList.remove('selected'));
-                activeSection.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-            }
-        }
-    </script>
-    <script src="script.js"></script>
+                function btSalvar() {
+                    if (typeof salvarEscalaAtual === "function") {
+                        salvarEscalaAtual();
+                    }
+                }
 
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log())
-      .catch(err => console.log("Erro no registro:", err));
-  }
-</script>
-    
+                function limparTelaAtual() {
+                    document.getElementById('result').style.display = 'none';
+                    const activeSection = document.getElementById(`scale-${currentScale}`);
+                    if (activeSection) {
+                        activeSection.querySelectorAll('.option-balloon').forEach(b => b.classList.remove('selected'));
+                        activeSection.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+                    }
+                }
+            </script>
+            <script src="script.js"></script>
+
+            <script>
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('./sw.js')
+                        .then(() => console.log())
+                        .catch(err => console.log("Erro no registro:", err));
+                }
+            </script>
+
 </body>
+
 </html>
